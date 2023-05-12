@@ -8,28 +8,31 @@ m = np.array([ [ 9.6, 3.3, 5.6, 7.2, 5.6, 5.4, 1.9, 8.2, 10. , 7.1],
 epsilon = 1e-5
 gamma = 4
 beta = 0.3
-n = np.tanh(m)   #data is activated
+
 # calculate the mean and variance of each row
-row_means = np.mean(n, axis=1)
-row_variances = np.var(n, axis=1)
+row_means = np.mean(m, axis=1)
+row_variances = np.var(m, axis=1)
 print("BATCH NORMALISATION")
 
 
 # perform mean normalization and variance scaling for each row
-for i in range(n.shape[0]):
+for i in range(m.shape[0]):
     
-    n_norm = gamma*((n[i] - row_means[i]) / np.sqrt(row_variances[i] + epsilon)) + beta
-    print(" Normalized row", i, ":", n_norm)
+    m_norm = gamma*((m[i] - row_means[i]) / np.sqrt(row_variances[i] + epsilon)) + beta
+    n = np.tanh(m_norm) #activated data with tanh
+    print(" Normalized row", i, ":", n)
     print(" ")
-    
+
+
 print(" ")
 # calculate the mean and variance of each column
-col_means = np.mean(n, axis=0)
-col_variances = np.var(n, axis=0)
+col_means = np.mean(m, axis=0)
+col_variances = np.var(m, axis=0)
 
 print("LAYER NORMALISATION")
 # perform mean normalization and variance scaling for each column
-for j in range(n.shape[0]):
-    n__norm = gamma*((n[j] - col_means[j]) / np.sqrt(col_variances[j] + epsilon)) + beta
-    print(" Normalized row", j, ":", n__norm)
+for i in range(m.shape[0]):
+    m_norm = gamma*((m[i] - col_means[i]) / np.sqrt(col_variances[i] + epsilon)) + beta
+    n = np.tanh(m_norm)  #activated data with tanh
+    print(" Normalized row", i, ":", n)
     print(" ")
